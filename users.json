@@ -1,0 +1,193 @@
+{
+    "1140619468": {
+        "notification_time": {
+            "hour": 10,
+            "minute": 55
+        },
+        "notifications": [
+            {
+                "hour": 13,
+                "minute": 30
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 45
+            },
+            {
+                "hour": 11,
+                "minute": 50
+            },
+            {
+                "hour": 11,
+                "minute": 55
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 40
+            },
+            {
+                "hour": 11,
+                "minute": 45
+            },
+            {
+                "hour": 11,
+                "minute": 45
+            },
+            {
+                "hour": 11,
+                "minute": 50
+            },
+            {
+                "hour": 0,
+                "minute": 0
+            },
+            {
+                "hour": 0,
+                "minute": 0
+            },
+            {
+                "hour": 12,
+                "minute": 5
+            },
+            {
+                "hour": 13,
+                "minute": 20
+            },
+            {
+                "hour": 12,
+                "minute": 10
+            },
+            {
+                "hour": 12,
+                "minute": 15
+            },
+            {
+                "hour": 12,
+                "minute": 30
+            },
+            {
+                "hour": 12,
+                "minute": 35
+            },
+            {
+                "hour": 12,
+                "minute": 35
+            },
+            {
+                "hour": 12,
+                "minute": 35
+            },
+            {
+                "hour": 12,
+                "minute": 35
+            },
+            {
+                "hour": 12,
+                "minute": 35
+            },
+            {
+                "hour": 13,
+                "minute": 0
+            },
+            {
+                "hour": 13,
+                "minute": 0
+            },
+            {
+                "hour": 13,
+                "minute": 5
+            },
+            {
+                "hour": 13,
+                "minute": 5
+            },
+            {
+                "hour": 13,
+                "minute": 15
+            },
+            {
+                "hour": 13,
+                "minute": 35
+            },
+            {
+                "hour": 22,
+                "minute": 40
+            },
+            {
+                "hour": 22,
+                "minute": 45
+            },
+            {
+                "hour": 6,
+                "minute": 25
+            }
+        ]
+    },
+    "1340728730": {
+        "notifications": [
+            {
+                "hour": 13,
+                "minute": 20
+            },
+            {
+                "hour": 13,
+                "minute": 20
+            },
+            {
+                "hour": 13,
+                "minute": 25
+            },
+            {
+                "hour": 13,
+                "minute": 25
+            }
+        ],
+        "join_date": "2025-03-01"
+    },
+    "972180516": {
+        "notifications": [
+            {
+                "hour": 0,
+                "minute": 20
+            },
+            {
+                "hour": 22,
+                "minute": 40
+            }
+        ],
+        "join_date": "2025-03-01"
+    },
+    "1080606389": {
+        "notifications": [
+            {
+                "hour": 23,
+                "minute": 5
+            }
+        ],
+        "join_date": "2025-03-01"
+    }
+}
