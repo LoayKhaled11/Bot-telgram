@@ -242,7 +242,7 @@ def main() -> None:
     if not token:
         logger.error("❌ مفيش توكن موجود في البيئة.")
         return
-    await asyncio.sleep(60)
+    sleep(60)
     application = Application.builder().token(token).build()
 
     # جدولة إرسال الرسائل اليومية بعد التراويح (الساعة 9 مساءً)
