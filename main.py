@@ -6,8 +6,6 @@ import pytz
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, CallbackQueryHandler, JobQueue
 from dotenv import load_dotenv
-import asyncio
-from aiohttp import web
 
 # تحميل المتغيرات البيئية
 load_dotenv()
@@ -237,28 +235,21 @@ async def admin_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     )
     await update.message.reply_text(stats_message)
 
-async def health_check(request):
-    return web.Response(text="OK")
 # الدالة الرئيسية
 def main() -> None:
     token = os.getenv('TELEGRAM_TOKEN')
     if not token:
         logger.error("❌ مفيش توكن موجود في البيئة.")
         return
-    web_app = web.Application()
-    web_app.add_routes([web.get('/health', health_check)])
-    runner = web.AppRunner(web_app)
-
     application = Application.builder().token(token).build()
 
     # جدولة إرسال الرسائل اليومية بعد التراويح (الساعة 9 مساءً)
-    def init_schedulers():
-        job_queue = application.job_queue
-        job_queue.run_daily(
-            send_after_taraweeh,
-            time=time(hour=21, minute=0, tzinfo=LOCAL_TIMEZONE),
-            days=(0, 1, 2, 3, 4, 5, 6)
-        )
+    job_queue = application.job_queue
+    job_queue.run_daily(
+        send_after_taraweeh,
+        time=time(hour=21, minute=0, tzinfo=LOCAL_TIMEZONE),  # الساعة 9 مساءً
+        days=(0, 1, 2, 3, 4, 5, 6)  # كل أيام الأسبوع
+    )
 
     # إضافة handlers أخرى
     application.add_handler(CommandHandler("start", start))
@@ -268,35 +259,6 @@ def main() -> None:
     application.add_handler(CallbackQueryHandler(handle_minute_selection_callback, pattern="^minute_"))
     application.add_handler(CallbackQueryHandler(handle_hour_selection_callback, pattern="^cancel_all"))
     application.run_polling()
-
-    async def run_services():
-        # Start HTTP server first
-        await runner.setup()
-        site = web.TCPSite(runner, '0.0.0.0', 8000)
-        await site.start()
-        logger.info("HTTP server started on port 8000")
-
-        # Initialize Telegram bot after HTTP server is ready
-        await application.initialize()
-        await application.start()
-        logger.info("Telegram bot initialized")
-
-        # Initialize schedulers after everything is ready
-        init_schedulers()
-        await application.updater.start_polling()
-        logger.info("Schedulers and polling started")
-
-        # Keep running forever
-        while True:
-            await asyncio.sleep(3600)
-
-    try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(run_services())
-    except KeyboardInterrupt:
-        logger.info("Shutting down...")
-        loop.run_until_complete(runner.cleanup())
-        loop.run_until_complete(application.stop())
 
 if __name__ == '__main__':
     main()
