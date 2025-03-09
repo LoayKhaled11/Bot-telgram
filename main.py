@@ -6,6 +6,7 @@ import pytz
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, CallbackQueryHandler, JobQueue
 from dotenv import load_dotenv
+import asyncio
 
 # تحميل المتغيرات البيئية
 load_dotenv()
@@ -241,6 +242,7 @@ def main() -> None:
     if not token:
         logger.error("❌ مفيش توكن موجود في البيئة.")
         return
+    await asyncio.sleep(60)
     application = Application.builder().token(token).build()
 
     # جدولة إرسال الرسائل اليومية بعد التراويح (الساعة 9 مساءً)
