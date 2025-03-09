@@ -237,12 +237,12 @@ async def admin_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     await update.message.reply_text(stats_message)
 
 # الدالة الرئيسية
-def main() -> None:
+async def main() -> None:
     token = os.getenv('TELEGRAM_TOKEN')
     if not token:
         logger.error("❌ مفيش توكن موجود في البيئة.")
         return
-    sleep(60)
+    await asyncio.sleep(60)
     application = Application.builder().token(token).build()
 
     # جدولة إرسال الرسائل اليومية بعد التراويح (الساعة 9 مساءً)
