@@ -7,6 +7,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, CallbackQueryHandler, JobQueue
 from dotenv import load_dotenv
 import asyncio
+from aiohttp import web
 
 # تحميل المتغيرات البيئية
 load_dotenv()
@@ -236,15 +237,33 @@ async def admin_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     )
     await update.message.reply_text(stats_message)
 
+async def health_check(request):
+    return web.Response(text="OK")
+    
 # الدالة الرئيسية
-async def main() -> None:
+def main() -> None:
     token = os.getenv('TELEGRAM_TOKEN')
     if not token:
         logger.error("❌ مفيش توكن موجود في البيئة.")
         return
-    await asyncio.sleep(60)
     application = Application.builder().token(token).build()
+    
+    web_app = web.Application()
+    web_app.add_routes([web.get('/health', health_check)])
+    runner = web.AppRunner(web_app)
 
+    async def run_app():
+        await application.initialize()
+        await application.start()
+        await runner.setup()
+        site = web.TCPSite(runner, '0.0.0.0', 8000)
+        await site.start()
+        await application.updater.start_polling()
+    
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(run_app())
+    loop.run_forever()
+    
     # جدولة إرسال الرسائل اليومية بعد التراويح (الساعة 9 مساءً)
     job_queue = application.job_queue
     job_queue.run_daily(
@@ -263,15 +282,4 @@ async def main() -> None:
     application.run_polling()
 
 if __name__ == '__main__':
-    if __name__ == '__main__':
-    try:
-        loop = asyncio.get_running_loop()
-    except RuntimeError:
-        loop = None
-
-    if loop and loop.is_running():
-        # If the event loop is already running, use create_task
-        loop.create_task(main())
-    else:
-        # If the event loop is not running, use asyncio.run
-        asyncio.run(main())
+    main()
